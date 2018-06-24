@@ -1,13 +1,12 @@
 const connection = require('./connection');
 
-
 const orm = {
-    selectAll: () => {
+    selectAll: (res) => {
         connection.query("SELECT * FROM ??",["burgers"],(err,res) => {
                 if(err) throw err;
                 console.log(res);
                 connection.end();
-            })
+            }).then(res => res.json(res))
     },
     insertOne: (burger_name) => {
         connection.query("INSERT INTO ?? (??) VALUES (??)",
@@ -28,4 +27,6 @@ const orm = {
         })
     }
 }
+
+module.exports = orm;
 

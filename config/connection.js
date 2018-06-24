@@ -1,11 +1,11 @@
 import mySQL from 'mysql';
 // import dotenv from 'dotenv';
 
-require('dotenv').config()
+// require('dotenv').config()
 
-import passcode from '../keys';
+// import Passcode from '../keys';
 
-console.log(passcode.PASSCODE_SETUP);
+// console.log(Passcode.PASSWORD);
 
 // dotenv.config();
 
@@ -13,7 +13,7 @@ console.log(passcode.PASSCODE_SETUP);
 //     host: "localhost",
 //     port: 3306,
 //     user: "root",
-//     password: `${passcode.PASSCODE_SETUP}`,
+//     password: "",
 //     database: "burgers_db"
 // });
 
@@ -24,5 +24,11 @@ console.log(passcode.PASSCODE_SETUP);
 //     }
 //     console.log("connected as id " + connection.threadId);
 //   });
+
+//   connection.query("SELECT * FROM ??",["burgers"],(err,res) => {
+//       if(err) throw err;
+//       console.log(res);
+//       connection.end();
+//   })
   
 //   export default connection;

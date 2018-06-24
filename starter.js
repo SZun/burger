@@ -4,4 +4,4 @@ require('babel-register')({
     plugins: ["transform-object-rest-spread", "transform-class-properties"]
 })
 
-module.exports = require('./server.js')
+module.exports = require('./config/connection.js')

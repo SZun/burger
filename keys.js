@@ -1,8 +1,8 @@
 
 const passcode = {
-    PASSWORD: process.env.PASSCODE_SETUP,
+    PASSCODE: process.env.PASSCODE,
 };
 
-export default passcode;
+module.exports = passcode;
 
 

@@ -9,5 +9,3 @@ CREATE TABLE burgers (
     devoured BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
 );
-
-SELECT * FROM burgers;

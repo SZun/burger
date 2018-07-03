@@ -1,9 +1,24 @@
-const orm = require('../config/orm');
+import orm from "../config/orm.js";
 
-const model = (app) => {
-    app.post('/api/burgers', (req,res) => {
-        orm.selectAll(res)
-    })
-}
+const burger = {
+  all(cb) {
+    orm.all("burgers", res => {
+      cb(res);
+    });
+  },
+  create(name, cb) {
+    orm.create("burgers", [
+      "burger_name", "devoured"
+    ], [
+      name, false
+    ], cb);
+  },
+  update(id, cb) {
+    const condition = `id=${id}`;
+    orm.update("burgers", {
+      devoured: true
+    }, condition, cb);
+  }
+};
 
-module.exports = model;
+export default burger;

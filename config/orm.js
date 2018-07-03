@@ -1,32 +1,70 @@
-const connection = require('./connection');
+import connection from "./connection.js";
 
-const orm = {
-    selectAll: (res) => {
-        connection.query("SELECT * FROM ??",["burgers"],(err,res) => {
-                if(err) throw err;
-                console.log(res);
-                connection.end();
-            }).then(res => res.json(res))
-    },
-    insertOne: (burger_name) => {
-        connection.query("INSERT INTO ?? (??) VALUES (??)",
-        ["burgers","burger_name",burger_name],
-        (err,res) => {
-            if(err) throw err;
-            console.log(res);
-            connection.end();
-        })
-    },
-    updateOne: (id) => {
-        connection.query("UPDATE ?? WHERE ?? = ? AND id = ? (??)",
-        ["burgers","devoured",0,id],
-        (err,res) => {
-            if(err) throw err;
-            console.log(res);
-            connection.end();
-        })
-    }
+function printQuestionMarks(num) {
+  const arr = [];
+
+  for (let i = 0; i < num; i++) {
+    arr.push("?");
+  }
+
+  return arr.toString();
 }
 
-module.exports = orm;
+function objToSql(ob) {
+  const arr = [];
 
+  for (const key in ob) {
+    arr.push(`${key}=${ob[key]}`);
+  }
+
+  return arr.toString();
+}
+
+const orm = {
+  all(tableInput, cb) {
+    const queryString = `SELECT * FROM ${tableInput};`;
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
+  create(table, cols, vals, cb) {
+    let queryString = `INSERT INTO ${table}`;
+
+    queryString += " (";
+    queryString += cols.toString();
+    queryString += ") ";
+    queryString += "VALUES (";
+    queryString += printQuestionMarks(vals.length);
+    queryString += ") ";
+
+    console.log(queryString);
+
+    connection.query(queryString, vals, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
+  update(table, objColVals, condition, cb) {
+    let queryString = `UPDATE ${table}`;
+
+    queryString += " SET ";
+    queryString += objToSql(objColVals);
+    queryString += " WHERE ";
+    queryString += condition;
+
+    console.log(queryString);
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  }
+};
+
+export default orm;
